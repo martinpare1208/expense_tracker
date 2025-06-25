@@ -1,5 +1,5 @@
 from app import app, controllers
-from flask import render_template
+from flask import render_template, request, redirect, url_for
 
 
 @app.route("/")
@@ -19,4 +19,15 @@ def adding_user():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    
+    if request.method == 'POST':
+        username = request.form.get("username")
+        password = request.form.get("password")
+        return redirect(url_for('show_forms'), username=username, password=password)
+    else:
+        return render_template('login.html')
+        
+        
+@app.route("/show_forms/<username>/<password>")
+def show_forms(username, password):
+    return f'<h3>{username}, {password}</h3>'
+
