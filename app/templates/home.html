@@ -1,10 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'logged_in_base.html' %}
 {% block title %}
     Home: Save Money!
 {% endblock %}
-{% block main_content %}
 
-<h1>HELLO</h1>
-<h1>Hello</h1>
+{% block username %}
+    {{current_user.username}}
+{% endblock %}
+
+{% block main_content %}
 
 {% endblock %}
