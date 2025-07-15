@@ -21,17 +21,13 @@ def logout():
 def main():
     return render_template('home.html', active="home")
 
+
 @app.route("/dashboard")
 @login_required
 def dashboard():
     
     return render_template('home.html', active='dashboard', user=current_user)
 
-# refactor
-@app.route("/add_user", methods=["GET"])
-def adding_user():
-    controllers.add_user_controller()
-    return render_template('home.html')
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -51,35 +47,39 @@ def login():
             return redirect(url_for('login'))
         
     else:
-        
-        return render_template('login.html')
-        
-        
-
-
-@app.route("/get_user")
-def get_user_test():
-    controllers.get_user_controller()
-    return f'<h3>Hello</h3>'
-
-
-@app.route("/logintest")
-def login_test():
-    user = 'martin'
-    password = 'password'
+        is_login = True
+        return render_template('login.html', is_login=is_login)
     
-    #Returns true if logged in 
-    is_true, user = controllers.get_user_controller(user, password)
-    if is_true:
-        login_user(user)
-        
     
-    return '<h3>Hello</h3>'
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirm_password = request.form.get("confirmPassword")
+        
+        if confirm_password != password:
+            flash('Passwords DO NOT match. Please try again.')
+            return redirect(url_for('register'))
+            
+        user_exists = False
+        checked_user = User.query.where(User.username == username).first()
+        if checked_user is not None:
+            user_exists = True
+            
+        if user_exists:
+            flash('Username already exists. Try another username.')
+            return redirect(url_for('register'))
+        
+        controllers.add_user_controller(username, password)
+        flash('Account successfully created. Please login.')
+        return redirect(url_for('login'))
+    
+    
+    return render_template('register.html')
+        
+        
 
 
-
-@app.route("/loggedin")
-@login_required
-def logged_in():
-    return '<h3>HELLO</h3>'
 
