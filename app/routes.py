@@ -1,5 +1,5 @@
 from app import app, controllers, login_manager
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, session
 from app.db.models import User
 from flask_login import login_user, login_required, logout_user, current_user
 
@@ -9,11 +9,15 @@ from flask_login import login_user, login_required, logout_user, current_user
 def load_user(user_id):
     return User.query.get(int(user_id)) 
 
+#when starting app, have a dedicated home page for not signing in
+
 
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
+    session.clear()
+    flash('You have successfully logged out.')
     return redirect(url_for('login'))
 
 @app.route("/")
