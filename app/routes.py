@@ -66,19 +66,14 @@ def register():
         if confirm_password != password:
             flash('Passwords DO NOT match. Please try again.')
             return redirect(url_for('register'))
-            
-        user_exists = False
-        checked_user = User.query.where(User.username == username).first()
-        if checked_user is not None:
-            user_exists = True
-            
-        if user_exists:
-            flash('Username already exists. Try another username.')
-            return redirect(url_for('register'))
+
+        controller_result = controllers.add_user_controller(username, password)
+        if controller_result.is_success:
+            flash(controller_result.message)
+            return redirect(url_for('login'))
         
-        controllers.add_user_controller(username, password)
-        flash('Account successfully created. Please login.')
-        return redirect(url_for('login'))
+        flash(controller_result.message)
+        return redirect(url_for('register'))
     
     
     return render_template('register.html')

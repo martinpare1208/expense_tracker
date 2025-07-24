@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, ForeignKey
 from flask_login import UserMixin
 
 
@@ -19,3 +19,11 @@ class User(UserMixin, database.Model):
     
     def __repr__(self):
         return f'{self.id}: {self.username}, {self.hashed_password}'
+    
+    
+    
+class Expense(database.Model):
+    __tablename__ = "Expense"
+    e_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey('User.id'))
+    
