@@ -8,4 +8,3 @@ class ControllerResult:
     data: dict
     
         
-    
