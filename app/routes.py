@@ -32,6 +32,10 @@ def dashboard():
     
     return render_template('home.html', active='dashboard', user=current_user)
 
+@app.route("/expenses")
+@login_required
+def expenses():
+    return render_template('expenses.html', active="expenses", user=current_user)
 
 
 @app.route("/login", methods=["GET", "POST"])

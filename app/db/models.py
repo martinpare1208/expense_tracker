@@ -19,7 +19,7 @@ class User(UserMixin, database.Model):
         self.hashed_password = hashed_password
     
     def __repr__(self):
-        return f'{self.id}: {self.username}, {self.hashed_password}'
+        return f'{self.id}: {self.username}'
     
     
     
