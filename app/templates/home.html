@@ -1,6 +1,6 @@
 {% extends 'logged_in_base.html' %}
 {% block title %}
-    Home: Save Money!
+    Overview
 {% endblock %}
 
 
@@ -8,5 +8,10 @@
 {% block username %}
     {{current_user.username}}
 {% endblock %}
-<h1>hello</h1>
+
+<div id="main-content-container" class="d-flex ">
+    <h1>Expenses Overview</h1>
+    <h3>Placeholder Graph</h3>
+</div>
+
 {% endblock %}

@@ -1,2 +1,61 @@
 {% extends 'logged_in_base.html' %}
 
+{% block main_content %}
+<div class="w-100 d-flex justify-content-center mt-3 flex-column align-items-center" id="container">
+
+  <!-- Expense Name -->
+
+<h2>Add an Expense</h2>
+<div class="w-25 border border-2 p-3">
+<div class="mb-3" id="expense-name-container">
+    <label for="usernameInput" class="form-label">Expense Name:</label>
+    <input type="username" class="form-control" id="expense-name" aria-describedby="expense-name-help" name="username" placeholder="Lunch, Dinner w/ Family, etc...">
+    <div id="expense-name-help" class="form-text">Name your expense</div>
+  </div>
+
+<!-- Expense Amount -->
+ 
+<div class="mb-3">
+  <label for="readonlyAmount" class="form-label">Amount</label>
+  <div class="input-group">
+    <span class="input-group-text">$</span>
+    <input type="text" class="form-control" id="readonlyAmount" placeholder="0.00" name="amount">
+  </div>
+</div>
+
+<!-- Category -->
+
+<div class="input-group mb-3">
+<select class="form-select" aria-label="Default select example">
+  <option disabled selected>Choose a category</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</select>
+</div>
+
+
+<!-- Payment Type -->
+
+<div class="input-group mb-3">
+<select class="form-select" aria-label="Default select example">
+  <option disabled selected>Choose a payment type</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</select>
+</div>
+
+
+
+
+  <div class="mb-3" id="confirm-password-container">
+    <label for="passwordInput" class="form-label">Confirm Password</label>
+    <input type="password" class="form-control" id="passwordInput" name="confirmPassword">
+  </div>
+  <div class="d-flex justify-content-center">
+  <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</div>
+</div>
+{% endblock %}

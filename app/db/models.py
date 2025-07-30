@@ -34,6 +34,9 @@ class Expense(database.Model):
     payment_type: Mapped[str] = mapped_column(String(1000))
     description: Mapped[str] = mapped_column(String(5000))
     location: Mapped[str] = mapped_column(String(1000))
+    # currency_code: Mapped[str] = mapped_column(ForeignKey('CurrencyType.currency_code'))
+    # currency_label: Mapped[str] = mapped_column(ForeignKey('CurrencyType.currency_label'))
+    # date_of_receipt: Mapped[datetime] = mapped_column(DateTime)
     
     
     def __init__(self, amount: float, payment_type: str, description: str, location: str):
@@ -47,10 +50,10 @@ class Expense(database.Model):
         return 
     
     
-class CurrencyType:
+class CurrencyType(database.Model):
     __tablename__ = "CurrencyType"
     
-    currency_code: Mapped[str] = mapped_column(primary_key=True, nullable=False)
+    currency_code: Mapped[str] = mapped_column(String(100), primary_key=True, nullable=False)
     currency_name: Mapped[str] = mapped_column(String(100), nullable=False)
     country: Mapped[str] = mapped_column(String(1000))
     currency_label: Mapped[str] = mapped_column(String(100))
@@ -67,13 +70,13 @@ class CurrencyType:
         return 
     
     
-class UserSettings:
+class UserSettings(database.Model):
     __tablename__ =  "UserSettings"
     
-    user_id: Mapped[int] = mapped_column(ForeignKey('User.id'))
+    settings_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, nullable=False)
+    user_id: Mapped[int] = mapped_column(ForeignKey('User.id'), nullable=False)
     isDarkMode: Mapped[bool] = mapped_column(Boolean)
     currency_code: Mapped[str] = mapped_column(ForeignKey('CurrencyType.currency_code'))
-    currency_name: Mapped[str] = mapped_column(ForeignKey('CurrencyType.currency_name'))
     
     def __init__(self, user_id: int, isDarkMode: bool, currency_code: str, currency_name: str):
         self.user_id = user_id
@@ -85,10 +88,10 @@ class UserSettings:
     def __repr__(self):
         return
 
-class ExpenseCategory:
+class ExpenseCategory(database.Model):
     __tablename__ = "ExpenseCategory"
     
-    category_code: Mapped[str] = mapped_column(String(100))
+    category_code: Mapped[str] = mapped_column(String(100), primary_key=True)
     category_name: Mapped[str] = mapped_column(String(100))
     category_desc: Mapped[str] = mapped_column(String(1000))
     
